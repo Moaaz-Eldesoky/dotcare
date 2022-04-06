@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <!-- first navbar -->
-    <div class="container-fluid p-1 m-0 acount-and-lang">
+    <div class="container-fluid p-1 m-0 acount-and-lang bg-white mb-2">
       <div class="d-flex justify-content-between">
         <div class="logo"><img src="../static/Logo.png" height="20" /></div>
         <div class="account d-flex justify-content-around">
@@ -105,6 +105,7 @@ body {
   font-size: 1.6rem;
   line-height: 1.7;
   box-sizing: border-box;
+    background-color: #d8e9fa;
 }
 * {
   margin: 0;
@@ -151,5 +152,15 @@ body {
 }
 .seperator {
   display: inline-block;
+}
+@media (max-width:771px) {
+    html {
+  font-size: 38%;
+}
+}
+@media (max-width:540px) {
+    html {
+  font-size: 34%;
+}
 }
 </style>
