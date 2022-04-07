@@ -95,7 +95,7 @@
               </label>
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-6" v-if="product==false">
             <label class="d-block">Product<span>*</span></label>
             <select class="form-select" :disabled="product">
               <option selected>Product 1</option>
@@ -148,13 +148,24 @@
             </div>
           </div>
         </div>
+        <!-- ************************ -->
         <div class="result-box">
-          <img
+          <div class="empty-result" v-if="toggeler==true">
+            <img
             src="../static/health-folder-icon-2.jpg"
             class="m-auto d-block"
           />
           <p class="text-center">Select Warehouse and Product</p>
+          </div>
+          <div class="results">
+            <div class="row" v-for="item in productsData" :key="item.id">
+              <div class="col-4 item name">{{item.productName}}</div>
+              <div class="col-4 item quantity">{{item.balance}}</div>
+              <div class="col-4 item type">{{item.type}}</div>
+            </div>
+          </div>
         </div>
+        <!-- ******************* -->
         <div class="pagenation">
           <p class="text-right">no items to display</p>
         </div>
@@ -164,6 +175,7 @@
 </template>
 
 <script>
+import JsonData from "../static/json/product_store.json"
 export default {
   data: () => {
     return {
@@ -172,6 +184,8 @@ export default {
       allProducts: true,
       specificProduct: true,
       product: true,
+      productsData: JsonData,
+      toggeler:false,
     };
   },
 };

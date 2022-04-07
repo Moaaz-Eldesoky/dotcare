@@ -3,9 +3,9 @@
     <!-- first navbar -->
     <div class="container-fluid p-1 m-0 acount-and-lang bg-white mb-2">
       <div class="d-flex justify-content-between">
-        <div class="logo"><img src="../static/Logo.png" height="20" /></div>
-        <div class="account d-flex justify-content-around">
-          <div class="droupdown-button">
+        <div class="logo"><img src="../static/Logo.png" /></div>
+        <div class="d-flex justify-content-around">
+          <div class="lang-droupdown-button">
             <b-dropdown
               variant="outline-none"
               id="dropdown-1"
@@ -19,7 +19,7 @@
           </div>
           <div class="vl mr-3"></div>
           <div class="account d-flex justify-content-center m-auto">
-            <img src="../static/user-icon.png" height="30" />
+            <img class="user-img" src="../static/user-icon.png" />
             <p>Moaaz Eldesoky</p>
           </div>
         </div>
@@ -38,43 +38,50 @@
             v-b-modal.modal-1
             @click="visible = !visible"
           >
-            <img src="../static/menu_grid_icon.png" class="menu-png-icon mt-n2" />
+            <img
+              src="../static/menu_grid_icon.png"
+              class="menu-png-icon mt-n2"
+            />
           </b-button>
-          <b-modal
-            hide-footer
-            hide-header
-            id="modal-1"
-            class="modal-menu"
-            title="product-modal"
-          >
-            <nuxt-link to="/product">
-              <img src="../static/product-icon.jpg" height="30rem" class="ml-5 mt-2"/>
-              <p class="menu-product mb-0 ml-4" >Product</p>
-            </nuxt-link>
-          </b-modal>
+          <div class="container">
+            <b-modal
+              hide-footer
+              hide-header
+              id="modal-1"
+              class="modal-menu"
+              title="product-modal"
+            >
+              <nuxt-link to="/product" class="product-link" style="text-decoration:none">
+                <img
+                  src="../static/product-icon.jpg"
+                  height="30rem"
+                  class="modal-img ml-5 mt-2"
+                />
+                <p class="menu-product mb-0 ml-4">Product</p>
+              </nuxt-link>
+            </b-modal>
+          </div>
         </div>
         <div class="vl-white mr-3"></div>
         <div class="navbar-nav">
           <ul class="navbar-nav">
             <li class="nav-item mt-2">
-              <nuxt-link to="/home">
+              <nuxt-link to="/">
                 <img
                   src="../static/house_chimney_icon.png"
-                  class="house-png-icon mr-2 pb-1 "
+                  class="house-png-icon mr-2 pb-1"
                 />
               </nuxt-link>
-              <p class="seperator text-white ">></p>
+              <p class="seperator text-white">></p>
             </li>
             <li class="nav-item">
-              <nuxt-link to="/home" class="nav-link text-white ">
-                Home
-              </nuxt-link>
+              <nuxt-link to="/" class="nav-link text-white"> Home </nuxt-link>
             </li>
-            <li v-if="$nuxt.$route.name != 'home'" class="nav-item">
+            <li v-if="$nuxt.$route.name != 'index'" class="nav-item">
               <p class="seperator text-white">></p>
               <nuxt-link
                 to="product"
-                class="nav-link text-white d-inline-block "
+                class="nav-link text-white d-inline-block"
               >
                 {{ $nuxt.$route.name }}
               </nuxt-link>
@@ -115,7 +122,22 @@ body {
 .nav-menu-btn {
   height: 30px;
 }
-
+.logo img {
+  height: 2.5rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+.user-img {
+  height: 3rem;
+  margin-top: 0.5rem;
+}
+.account p {
+  font-size: 1.25rem;
+  word-spacing: -0.2rem;
+  padding-top: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
 .vl {
   border-left: 1px solid #ddd;
   height: 30px;
@@ -124,44 +146,50 @@ body {
   border-left: 2px solid white;
   height: 30px;
 }
-.droupdown-button .btn {
-  padding: 0;
+.lang-droupdown-button{
+  padding-top: 0.5rem;
+}
+.lang-droupdown-button .btn {
+  padding-top: 0.5rem;
   font-size: 1.5rem;
+}
 
-}
-.account p {
-  font-size: 1.25rem;
-  word-spacing: -0.2rem;
-}
 .routing {
   font-size: 1.25rem;
-    height: 4rem;
-overflow: hidden;
-}
-.menu-product{
-  color:#6c6a6a;
-  
+  height: 4rem;
+  overflow: hidden;
+  z-index: 1070;
 }
 
+.menu-product {
+  color: #6c6a6a;
+}
+.modal-img{
+  height: 3rem;
+}
+.product-link p{
+  color: #0357a8;
+}
 .bg-primary {
   background-color: #0357a8;
 }
 .menu-png-icon {
   height: 2.5rem;
 }
-.house-png-icon{
+.house-png-icon {
   height: 2.2rem;
 }
 .seperator {
   display: inline-block;
 }
 .modal-dialog {
-  max-width: 96.1%;
+  max-width: 100%;
   margin-left: 1.5rem;
-  top: 7rem;
-  background-color: #baedfa;;
+  margin-right: 3.25rem;
+  top: 8rem;
+  background-color: #baedfa;
 }
-.modal-body{
+.modal-body {
   background: #c8eef9;
   padding: 0px;
 }
@@ -169,10 +197,20 @@ overflow: hidden;
   html {
     font-size: 40%;
   }
+  .modal-dialog {
+  margin-right: 5rem;
+  margin-left: 2.25rem;
+  top: 8.5rem;
+}
 }
 @media (max-width: 540px) {
   html {
     font-size: 34%;
   }
+   .modal-dialog {
+  margin-right: 5.75rem;
+  margin-left: 2.75rem;
+  top: 10.5rem;
+}
 }
 </style>

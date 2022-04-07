@@ -1,7 +1,7 @@
 <template>
   <section class="home-page">
     <div class="content text-center">
-      <img src="../static/main-logo.png" height="300px" alt="Main logo" />
+      <img src="../static/main-logo-2.png" class="main-logo" height="200rem" alt="Main logo" />
       <p>Welcome...</p>
     </div>
   </section>
@@ -30,10 +30,14 @@ body{
 }
 .home-page{
     height: 40rem;
-    background-color: #ecfbff;
-    clip-path: circle(81.1% at 50% 177%);
+    background-color: #eefbff;
+    clip-path: circle(95.1% at 50% 210%);
 }
 .content{
+  /* padding-top: 5rem; */
     margin-top: 6rem;
+}
+.content img{
+  margin-bottom: 2rem;
 }
 </style>

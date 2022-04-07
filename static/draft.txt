@@ -90,3 +90,11 @@ library.add(faHouseChimney)
       </div>
     </div>
   </div>
+
+
+  <select class="form-select" :disabled="product">
+              <option selected>Product 1</option>
+              <option value="1">Product 2</option>
+              <option value="2">Product 3</option>
+              <option value="3">Product 4</option>
+            </select>
