@@ -47,3 +47,46 @@ library.add(faHouseChimney)
         });
 
 </script>
+
+
+<div class="container" id="myapp">
+    <div class="select-box">
+      <label class="d-block">Warehouse<span>*</span></label>
+      <select class="form-select" id="warehouse">
+        <option selected>Warehouse 1</option>
+        <option value="1">Warehouse 2</option>
+        <option value="2">Warehouse 3</option>
+        <option value="3">Warehouse 4</option>
+      </select>
+    </div>
+
+    <div class="Radio-button">
+      <label class="d-block">Product Classification</label>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="myRadio"
+          id="flexRadioDefault1"
+          onclick="handleClick(this)"
+          value="1"
+        />
+        <label class="form-check-label" for="flexRadioDefault1">
+          All Products
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="myRadio"
+          id="flexRadioDefault2"
+          onclick="handleClick(this);"
+          value="2"
+        />
+        <label class="form-check-label" for="flexRadioDefault2">
+          Spacific Product
+        </label>
+      </div>
+    </div>
+  </div>

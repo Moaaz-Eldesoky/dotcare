@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid full-page">
-    <h3 class="main-header font-weight-bold">Product</h3>
-    <div class="container-fluid border p-4 ">
+  <div class="container-fluid full-page" id="product-container">
+    <h3 class="main-header font-weight-bold mt-3 mb-3">Product</h3>
+    <div class="container-fluid border p-4">
       <div class="basic-informaion">
         <div class="secondary-header pt-4">
           <img src="../static/note_icon.png" height="20rem" />
@@ -10,25 +10,45 @@
         </div>
         <div class="row">
           <div class="col">
-            <label class="d-block">Warehouse<span>*</span></label>                ********************************
-            <select class="form-select" id="warehouse" >
-              <option selected>Warehouse 1</option>
-              <option value="1">Warehouse 2</option>
-              <option value="2">Warehouse 3</option>
-              <option value="3">Warehouse 4</option>
+            <label class="d-block">Warehouse<span>*</span></label>
+            <select
+              class="form-select"
+              id="warehouse"
+              @change="
+                ($event) =>
+                  $event.target.options.selectedIndex != 0
+                    ? ((type = false), (balance = false))
+                    : ((type = true), (balance = true))
+              "
+            >
+              <option value="0" selected>Select Warehouse</option>
+              <option value="1">Warehouse 1</option>
+              <option value="2">Warehouse 2</option>
+              <option value="3">Warehouse 3</option>
+              <option value="4">Warehouse 4</option>
             </select>
           </div>
           <div class="col">
-            <label class="d-block">Type<span>*</span></label>
-            <select class="form-select">
-              <option selected>Type A</option>
-              <option value="1">Type B</option>
-              <option value="2">Type C</option>
-              <option value="3">Type D</option>
+            <label class="d-block">Type <span>*</span></label>
+            <select class="form-select" :disabled="type"
+            @change="
+                ($event) =>
+                  $event.target.options.selectedIndex != 0
+                    ? ((allProducts = false), (specificProduct = false))
+                    : ((allProducts = true), (specificProduct = true))                  
+              "
+            >
+              <option selected>Select Type</option>
+              <option value="1">Type A</option>
+              <option value="2">Type B</option>
+              <option value="3">Type C</option>
             </select>
           </div>
           <div class="col pt-5">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              :disabled="balance"
+            />
             <label>Show Zero Balance</label>
           </div>
         </div>
@@ -39,9 +59,17 @@
               <input
                 class="form-check-input"
                 type="radio"
-                name="editList"                                                       ************************************
+                name="flexRadioDefault"
                 id="flexRadioDefault1"
-                value="one"
+                value="0"
+                :disabled="allProducts"
+                @change="
+                ($event) =>
+                  $event.target.checked != 0
+                    ? product = true
+                    : product = false
+              "
+                checked
               />
               <label class="form-check-label" for="flexRadioDefault1">
                 All Products
@@ -53,8 +81,14 @@
                 type="radio"
                 name="flexRadioDefault"
                 id="flexRadioDefault2"
-                value="two"
-                checked
+                value="1"
+                :disabled="specificProduct"
+                @change="
+                ($event) =>
+                  $event.target.checked != 0
+                    ? product = false
+                    : product = true
+              "
               />
               <label class="form-check-label" for="flexRadioDefault2">
                 Spacific Product
@@ -63,7 +97,7 @@
           </div>
           <div class="col-6">
             <label class="d-block">Product<span>*</span></label>
-            <select class="form-select">
+            <select class="form-select" :disabled="product">
               <option selected>Product 1</option>
               <option value="1">Product 2</option>
               <option value="2">Product 3</option>
@@ -119,7 +153,7 @@
             src="../static/health-folder-icon-2.jpg"
             class="m-auto d-block"
           />
-          <p class="text-center ">Select Warehouse and Product</p>
+          <p class="text-center">Select Warehouse and Product</p>
         </div>
         <div class="pagenation">
           <p class="text-right">no items to display</p>
@@ -129,14 +163,27 @@
   </div>
 </template>
 
+<script>
+export default {
+  data: () => {
+    return {
+      type: true,
+      balance: true,
+      allProducts: true,
+      specificProduct: true,
+      product: true,
+    };
+  },
+};
+</script>
 
 <style scoped>
-.border{
-    margin-bottom: 5rem;
-    background-color: #fff;
+.border {
+  margin-bottom: 5rem;
+  background-color: #fff;
 }
-.secondary-header{
-    font-size: 1.3rem;
+.secondary-header {
+  font-size: 1.3rem;
 }
 .basic-informaion label {
   color: gray;
@@ -171,10 +218,10 @@
 #search-bar {
   width: 100%;
   height: 2.5rem;
-  border:1px solid #DDD;
+  border: 1px solid #ddd;
 }
-#search-bar:focus{
-    border: none;
+#search-bar:focus {
+  border: none;
 }
 .search-icon {
   position: absolute;
@@ -198,8 +245,8 @@
   margin-left: -15px;
   padding-top: 2rem;
 }
-.result-box img{
-    height: 20rem;
+.result-box img {
+  height: 20rem;
 }
 .pagenation {
   background-color: #e5eaef;
@@ -208,8 +255,6 @@
   padding-right: 1rem;
   padding-top: 0.5rem;
   font-size: 1.25rem;
-  height: 3rem;  
+  height: 3rem;
 }
-
-
 </style>

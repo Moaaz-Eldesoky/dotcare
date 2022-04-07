@@ -20,53 +20,53 @@
           <div class="vl mr-3"></div>
           <div class="account d-flex justify-content-center m-auto">
             <img src="../static/user-icon.png" height="30" />
-            <p>sabry elsayed farag mahmoud</p>
+            <p>Moaaz Eldesoky</p>
           </div>
         </div>
       </div>
     </div>
     <!-- second navbar -->
-    <div class="container-fluid routing">
-      <nav class="navbar navbar-expand navbar-light bg-primary">
-        <div class="nav-menu-btn">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand navbar-light bg-primary routing">
+        <div class="nav-menu">
           <b-button
-            variant="primary"
-            class="mr-2 ml-0"
+            variant="none"
+            class="menu-btn mr-2 ml-0 p-2"
             :class="visible ? null : 'collapsed'"
             :aria-expanded="visible ? 'true' : 'false'"
             aria-controls="collapse-4"
+            v-b-modal.modal-1
             @click="visible = !visible"
           >
-            <img src="../static/menu_grid_icon.png" class="png-icon mt-n2" />
+            <img src="../static/menu_grid_icon.png" class="menu-png-icon mt-n2" />
           </b-button>
-          <b-collapse id="collapse-4" v-model="visible" class="mt-2">
-            <b-card-group deck class="card-group" >
-              <nuxt-link to="/product">    <!--style="width: 100rem-->
-                <b-card
-                  img-src="../static/product-icon.jpg"
-                  img-alt="Card image"
-                  img-top
-                >
-                  <b-card-text> Product </b-card-text>
-                </b-card>
-              </nuxt-link>
-            </b-card-group>
-          </b-collapse>
+          <b-modal
+            hide-footer
+            hide-header
+            id="modal-1"
+            class="modal-menu"
+            title="product-modal"
+          >
+            <nuxt-link to="/product">
+              <img src="../static/product-icon.jpg" height="30rem" class="ml-5 mt-2"/>
+              <p class="menu-product mb-0 ml-4" >Product</p>
+            </nuxt-link>
+          </b-modal>
         </div>
         <div class="vl-white mr-3"></div>
         <div class="navbar-nav">
           <ul class="navbar-nav">
-            <li class="nav-item m-auto pr-2">
+            <li class="nav-item mt-2">
               <nuxt-link to="/home">
                 <img
                   src="../static/house_chimney_icon.png"
-                  class="png-icon mr-2 mt-n2"
+                  class="house-png-icon mr-2 pb-1 "
                 />
               </nuxt-link>
-              <p class="seperator text-white m-auto">></p>
+              <p class="seperator text-white ">></p>
             </li>
             <li class="nav-item">
-              <nuxt-link to="/home" class="nav-link text-white mt-1">
+              <nuxt-link to="/home" class="nav-link text-white ">
                 Home
               </nuxt-link>
             </li>
@@ -74,7 +74,7 @@
               <p class="seperator text-white">></p>
               <nuxt-link
                 to="product"
-                class="nav-link text-white d-inline-block mt-1"
+                class="nav-link text-white d-inline-block "
               >
                 {{ $nuxt.$route.name }}
               </nuxt-link>
@@ -105,7 +105,7 @@ body {
   font-size: 1.6rem;
   line-height: 1.7;
   box-sizing: border-box;
-    background-color: #d8e9fa;
+  background-color: #d8e9fa;
 }
 * {
   margin: 0;
@@ -113,8 +113,9 @@ body {
   box-sizing: inherit;
 }
 .nav-menu-btn {
-  height: 20px;
+  height: 30px;
 }
+
 .vl {
   border-left: 1px solid #ddd;
   height: 30px;
@@ -126,6 +127,7 @@ body {
 .droupdown-button .btn {
   padding: 0;
   font-size: 1.5rem;
+
 }
 .account p {
   font-size: 1.25rem;
@@ -133,34 +135,44 @@ body {
 }
 .routing {
   font-size: 1.25rem;
+    height: 4rem;
+overflow: hidden;
 }
-.card-group {
-  max-width: 100%;
+.menu-product{
+  color:#6c6a6a;
+  
 }
-.card-group img {
-  width: 2.7rem;
-  margin-left: 2rem;
-}
-.card-body {
-  padding-top: 5px;
-}
+
 .bg-primary {
   background-color: #0357a8;
 }
-.png-icon {
+.menu-png-icon {
+  height: 2.5rem;
+}
+.house-png-icon{
   height: 2.2rem;
 }
 .seperator {
   display: inline-block;
 }
-@media (max-width:771px) {
-    html {
-  font-size: 38%;
+.modal-dialog {
+  max-width: 96.1%;
+  margin-left: 1.5rem;
+  top: 7rem;
+  background-color: #baedfa;;
 }
+.modal-body{
+  background: #c8eef9;
+  padding: 0px;
 }
-@media (max-width:540px) {
-    html {
-  font-size: 34%;
+@media (max-width: 771px) {
+  html {
+    font-size: 40%;
+  }
 }
+@media (max-width: 540px) {
+  html {
+    font-size: 34%;
+  }
 }
 </style>
