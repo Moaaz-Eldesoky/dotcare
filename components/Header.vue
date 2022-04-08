@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <!-- first navbar -->
+    <!-- white navbar -->
     <div class="container-fluid p-1 m-0 acount-and-lang bg-white mb-2">
       <div class="d-flex justify-content-between">
         <div class="logo"><img src="../static/Logo.png" /></div>
@@ -18,25 +18,31 @@
             </b-dropdown>
           </div>
           <div class="vl mr-3"></div>
-          <div class="account d-flex justify-content-center m-auto">
+          <nuxt-link
+            to="/profile"
+            class="account d-flex justify-content-center m-auto"
+            style="text-decoration: none"
+          >
             <img class="user-img" src="../static/user-icon.png" />
             <p>Moaaz Eldesoky</p>
-          </div>
+          </nuxt-link>
         </div>
       </div>
     </div>
-    <!-- second navbar -->
+    <!-- blue navbar -->
     <div class="container-fluid">
       <nav class="navbar navbar-expand navbar-light bg-primary routing">
         <div class="nav-menu">
           <b-button
             variant="none"
             class="menu-btn mr-2 ml-0 p-2"
-            :class="visible ? null : 'collapsed'"
-            :aria-expanded="visible ? 'true' : 'false'"
-            aria-controls="collapse-4"
-            v-b-modal.modal-1
-            @click="visible = !visible"
+            id="show-btn"
+            @click="
+              !visible
+                ? ($bvModal.show('modal-1'), (visible = !visible))
+                : ($bvModal.hide('modal-1'), (visible = !visible))
+            "
+            v-model="visible"
           >
             <img
               src="../static/menu_grid_icon.png"
@@ -44,20 +50,23 @@
             />
           </b-button>
           <div class="container">
-            <b-modal
-              hide-footer
-              hide-header
-              id="modal-1"
-              class="modal-menu"
-              title="product-modal"
-            >
-              <nuxt-link to="/product" class="product-link" style="text-decoration:none">
-                <img
-                  src="../static/product-icon.jpg"
-                  height="30rem"
-                  class="modal-img ml-5 mt-2"
-                />
-                <p class="menu-product mb-0 ml-4">Product</p>
+            <b-modal id="modal-1" class="modal-menu" hide-footer hide-header>
+              <nuxt-link
+                to="/product"
+                class="product-link"
+                style="text-decoration: none"
+              >
+                <div
+                  class="click-effect-hide"
+                  @click="$bvModal.hide('modal-1')"
+                >
+                  <img
+                    src="../static/product-icon.jpg"
+                    height="30rem"
+                    class="modal-img ml-5 mt-2"
+                  />
+                  <p class="menu-product mb-0 ml-4">Product</p>
+                </div>
               </nuxt-link>
             </b-modal>
           </div>
@@ -146,12 +155,14 @@ body {
   border-left: 2px solid white;
   height: 30px;
 }
-.lang-droupdown-button{
+.lang-droupdown-button {
   padding-top: 0.5rem;
+  z-index: 99999;
 }
 .lang-droupdown-button .btn {
   padding-top: 0.5rem;
   font-size: 1.5rem;
+  color: blue;
 }
 
 .routing {
@@ -164,10 +175,10 @@ body {
 .menu-product {
   color: #6c6a6a;
 }
-.modal-img{
+.modal-img {
   height: 3rem;
 }
-.product-link p{
+.product-link p {
   color: #0357a8;
 }
 .bg-primary {
@@ -198,19 +209,19 @@ body {
     font-size: 40%;
   }
   .modal-dialog {
-  margin-right: 5rem;
-  margin-left: 2.25rem;
-  top: 8.5rem;
-}
+    margin-right: 5rem;
+    margin-left: 2.25rem;
+    top: 8.5rem;
+  }
 }
 @media (max-width: 540px) {
   html {
     font-size: 34%;
   }
-   .modal-dialog {
-  margin-right: 5.75rem;
-  margin-left: 2.75rem;
-  top: 10.5rem;
-}
+  .modal-dialog {
+    margin-right: 5.75rem;
+    margin-left: 2.75rem;
+    top: 10.5rem;
+  }
 }
 </style>
