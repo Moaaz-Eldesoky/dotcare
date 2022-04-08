@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid full-page" id="product-container">
     <h3 class="main-header font-weight-bold mt-3 mb-3">Product</h3>
-    <div class="container-fluid border p-4">
+    <div class="border p-4">
       <div class="basic-informaion">
         <div class="secondary-header pt-4">
           <img src="../static/note_icon.png" height="20rem" />
@@ -106,7 +106,7 @@
           </div>
         </div>
         <div class="d-flex search-button">
-          <input type="submit" class="btn btn-primary" value="Search" />
+          <input type="submit" class="btn btn-primary" value="Search" @click="search_toggeler=!search_toggeler" />
         </div>
       </div>
       <div class="container-fluid product-detailes">
@@ -150,22 +150,22 @@
         </div>
         <!-- ************************ -->
         <div class="result-box">
-          <div class="empty-result" v-if="toggeler==true">
+          <div class="empty-result" v-if="search_toggeler==true">
             <img
             src="../static/health-folder-icon-2.jpg"
             class="m-auto d-block"
           />
           <p class="text-center">Select Warehouse and Product</p>
           </div>
-          <div class="results">
-            <div class="row" v-for="item in productsData" :key="item.id">
+          <div class="results "  v-if="search_toggeler==false">
+            <div class="row ml-2"  v-for="item in productsData" :key="item.id">
               <div class="col-4 item name">{{item.productName}}</div>
               <div class="col-4 item quantity">{{item.balance}}</div>
               <div class="col-4 item type">{{item.type}}</div>
             </div>
           </div>
         </div>
-        <!-- ******************* -->
+        <!-- ***Need to Add Pagnation Component*** -->
         <div class="pagenation">
           <p class="text-right">no items to display</p>
         </div>
@@ -185,7 +185,7 @@ export default {
       specificProduct: true,
       product: true,
       productsData: JsonData,
-      toggeler:false,
+      search_toggeler:true,
     };
   },
 };
