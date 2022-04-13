@@ -3,7 +3,7 @@
     <!-- white navbar -->
     <div class="container-fluid p-1 m-0 acount-and-lang bg-white mb-2">
       <div class="d-flex justify-content-between">
-        <div class="logo"><img src="../static/Logo.png" /></div>
+        <div class="logo"><nuxt-link to="/"><img src="../static/Logo.png" /></nuxt-link></div>
         <div class="d-flex justify-content-around">
           <div class="lang-droupdown-button">
             <b-dropdown

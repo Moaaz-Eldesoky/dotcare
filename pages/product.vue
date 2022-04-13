@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid full-page" id="product-container">
+  <div class="container-fluid full-page">
     <h3 class="main-header font-weight-bold mt-3 mb-3">Product</h3>
     <div class="border p-4">
       <div class="basic-informaion">
@@ -95,7 +95,7 @@
               </label>
             </div>
           </div>
-          <div class="col-6" v-if="product==false">
+          <div class="col-6" v-show="product==false">
             <label class="d-block">Product<span>*</span></label>
             <select class="form-select" :disabled="product">
               <option selected>Product 1</option>
