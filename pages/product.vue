@@ -14,12 +14,7 @@
             <select
               class="form-select"
               id="warehouse"
-              @change="
-                ($event) =>
-                  $event.target.options.selectedIndex != 0
-                    ? ((type = false), (balance = false))
-                    : ((type = true), (balance = true))
-              "
+              v-model="warehouse_selected"
             >
               <option value="0" selected>Select Warehouse</option>
               <option value="1">Warehouse 1</option>
@@ -30,25 +25,19 @@
           </div>
           <div class="col">
             <label class="d-block">Type <span>*</span></label>
-            <select class="form-select" :disabled="type"
-            @change="
-                ($event) =>
-                  $event.target.options.selectedIndex != 0
-                    ? ((allProducts = false), (specificProduct = false))
-                    : ((allProducts = true), (specificProduct = true))                  
-              "
+            <select
+              class="form-select"
+              v-model="type_selected"
+              :disabled="warehouse_selected<1"
             >
-              <option selected>Select Type</option>
+              <option value="0" selected>Select Type</option>
               <option value="1">Type A</option>
               <option value="2">Type B</option>
               <option value="3">Type C</option>
             </select>
           </div>
           <div class="col pt-5">
-            <input
-              type="checkbox"
-              :disabled="balance"
-            />
+            <input type="checkbox" :disabled="type_selected<1"/>
             <label>Show Zero Balance</label>
           </div>
         </div>
@@ -61,14 +50,9 @@
                 type="radio"
                 name="flexRadioDefault"
                 id="flexRadioDefault1"
-                value="0"
-                :disabled="allProducts"
-                @change="
-                ($event) =>
-                  $event.target.checked != 0
-                    ? product = true
-                    : product = false
-              "
+                value="all_products"
+                :disabled="type_selected<1"
+                v-model="picked"
                 checked
               />
               <label class="form-check-label" for="flexRadioDefault1">
@@ -81,21 +65,16 @@
                 type="radio"
                 name="flexRadioDefault"
                 id="flexRadioDefault2"
-                value="1"
-                :disabled="specificProduct"
-                @change="
-                ($event) =>
-                  $event.target.checked != 0
-                    ? product = false
-                    : product = true
-              "
+                value="specific_product"
+                :disabled="type_selected<1"
+                v-model="picked"
               />
               <label class="form-check-label" for="flexRadioDefault2">
                 Spacific Product
               </label>
             </div>
           </div>
-          <div class="col-6" v-show="product==false">
+          <div class="col-6" v-show="picked == 'specific_product'">
             <label class="d-block">Product<span>*</span></label>
             <select class="form-select" :disabled="product">
               <option selected>Product 1</option>
@@ -106,7 +85,12 @@
           </div>
         </div>
         <div class="d-flex search-button">
-          <input type="submit" class="btn btn-primary" value="Search" @click="search_toggeler=!search_toggeler" />
+          <input
+            type="submit"
+            class="btn btn-primary"
+            value="Search"
+            @click="search_toggeler = !search_toggeler"
+          />
         </div>
       </div>
       <div class="container-fluid product-detailes">
@@ -150,18 +134,18 @@
         </div>
         <!-- ************************ -->
         <div class="result-box">
-          <div class="empty-result" v-if="search_toggeler==true">
+          <div class="empty-result" v-if="search_toggeler == true">
             <img
-            src="../static/health-folder-icon-2.jpg"
-            class="m-auto d-block"
-          />
-          <p class="text-center">Select Warehouse and Product</p>
+              src="../static/health-folder-icon-2.jpg"
+              class="m-auto d-block"
+            />
+            <p class="text-center">Select Warehouse and Product</p>
           </div>
-          <div class="results "  v-if="search_toggeler==false">
-            <div class="row ml-2"  v-for="item in productsData" :key="item.id">
-              <div class="col-4 item name">{{item.productName}}</div>
-              <div class="col-4 item quantity">{{item.balance}}</div>
-              <div class="col-4 item type">{{item.type}}</div>
+          <div class="results" v-if="search_toggeler == false">
+            <div class="row ml-2" v-for="item in productsData" :key="item.id">
+              <div class="col-4 item name">{{ item.productName }}</div>
+              <div class="col-4 item quantity">{{ item.balance }}</div>
+              <div class="col-4 item type">{{ item.type }}</div>
             </div>
           </div>
         </div>
@@ -175,7 +159,7 @@
 </template>
 
 <script>
-import JsonData from "../static/json/product_store.json"
+import JsonData from "../static/json/product_store.json";
 export default {
   data: () => {
     return {
@@ -185,7 +169,11 @@ export default {
       specificProduct: true,
       product: true,
       productsData: JsonData,
-      search_toggeler:true,
+      search_toggeler: true,
+      // new variables
+      warehouse_selected:0,
+      type_selected:0,
+      picked:"",
     };
   },
 };
