@@ -77,10 +77,10 @@
           <div class="col-6" v-show="picked == 'specific_product'">
             <label class="d-block">Product<span>*</span></label>
             <select class="form-select" :disabled="product">
-              <option selected>Product 1</option>
-              <option value="1">Product 2</option>
-              <option value="2">Product 3</option>
-              <option value="3">Product 4</option>
+              <option value="0" selected>Select Product</option>
+              <option value="1">Product 1</option>
+              <option value="2">Product 2</option>
+              <option value="3">Product 3</option>
             </select>
           </div>
         </div>
@@ -89,6 +89,7 @@
             type="submit"
             class="btn btn-primary"
             value="Search"
+            :disabled="picked == ''"
             @click="search_toggeler = !search_toggeler"
           />
         </div>
@@ -163,14 +164,9 @@ import JsonData from "../static/json/product_store.json";
 export default {
   data: () => {
     return {
-      type: true,
-      balance: true,
-      allProducts: true,
-      specificProduct: true,
-      product: true,
       productsData: JsonData,
       search_toggeler: true,
-      // new variables
+      // v-model variables
       warehouse_selected:0,
       type_selected:0,
       picked:"",
