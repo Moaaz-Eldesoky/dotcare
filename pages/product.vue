@@ -10,44 +10,47 @@
         </div>
         <div class="row">
           <div class="col">
-            <label class="d-block">Warehouse<span>*</span></label>
+            <label class="d-block">Warehouse <span>*</span></label>
             <select
               class="form-select"
               id="warehouse"
-              @change="
-                ($event) =>
-                  $event.target.options.selectedIndex != 0
-                    ? ((type = false), (balance = false))
-                    : ((type = true), (balance = true))
-              "
+              v-model="warehouse_selected"
+              @change="filteredType"
             >
               <option value="0" selected>Select Warehouse</option>
-              <option value="1">Warehouse 1</option>
-              <option value="2">Warehouse 2</option>
-              <option value="3">Warehouse 3</option>
-              <option value="4">Warehouse 4</option>
+              <option
+                v-for="item in json_arr"
+                :value="item.name"
+                :key="item.id"
+              >
+                {{ item.name }}
+              </option>
             </select>
           </div>
           <div class="col">
             <label class="d-block">Type <span>*</span></label>
-            <select class="form-select" :disabled="type"
-            @change="
-                ($event) =>
-                  $event.target.options.selectedIndex != 0
-                    ? ((allProducts = false), (specificProduct = false))
-                    : ((allProducts = true), (specificProduct = true))                  
-              "
+            <select
+              class="form-select"
+              v-model="type_selected"
+              :disabled="warehouse_selected < 1"
+              @change="filteredProducts"
             >
-              <option selected>Select Type</option>
-              <option value="1">Type A</option>
-              <option value="2">Type B</option>
-              <option value="3">Type C</option>
+              <option value="0" selected>Select Type</option>
+              <option
+                v-for="item in WH_types_arr"
+                :value="item.type"
+                :key="item.id"
+              >
+                {{ item.type }}
+              </option>
             </select>
           </div>
           <div class="col pt-5">
             <input
               type="checkbox"
-              :disabled="balance"
+              v-model="show_zero_st"
+              :value="show_zero_st"
+              :disabled="type_selected < 1"
             />
             <label>Show Zero Balance</label>
           </div>
@@ -61,14 +64,9 @@
                 type="radio"
                 name="flexRadioDefault"
                 id="flexRadioDefault1"
-                value="0"
-                :disabled="allProducts"
-                @change="
-                ($event) =>
-                  $event.target.checked != 0
-                    ? product = true
-                    : product = false
-              "
+                value="all_products"
+                :disabled="type_selected < 1"
+                v-model="picked"
                 checked
               />
               <label class="form-check-label" for="flexRadioDefault1">
@@ -81,32 +79,37 @@
                 type="radio"
                 name="flexRadioDefault"
                 id="flexRadioDefault2"
-                value="1"
-                :disabled="specificProduct"
-                @change="
-                ($event) =>
-                  $event.target.checked != 0
-                    ? product = false
-                    : product = true
-              "
+                value="specific_product"
+                :disabled="type_selected < 1"
+                v-model="picked"
               />
               <label class="form-check-label" for="flexRadioDefault2">
                 Spacific Product
               </label>
             </div>
           </div>
-          <div class="col-6" v-show="product==false">
-            <label class="d-block">Product<span>*</span></label>
-            <select class="form-select" :disabled="product">
-              <option selected>Product 1</option>
-              <option value="1">Product 2</option>
-              <option value="2">Product 3</option>
-              <option value="3">Product 4</option>
+          <div class="col-6" v-show="picked == 'specific_product'">
+            <label class="d-block">Product <span>*</span></label>
+            <select v-model="product_selected" class="form-select">
+              <option :value="0" selected>Select Product</option>
+              <option
+                v-for="item in TY_product_arr"
+                :value="item.name"
+                :key="item.id"
+              >
+                {{ item.name }}
+              </option>
             </select>
           </div>
         </div>
         <div class="d-flex search-button">
-          <input type="submit" class="btn btn-primary" value="Search" @click="search_toggeler=!search_toggeler" />
+          <input
+            type="submit"
+            class="btn btn-primary"
+            value="Search"
+            :disabled="picked == '' || (picked=='specific_product' && product_selected == 0)"
+            @click="search_result=true,search_excution()"
+          />
         </div>
       </div>
       <div class="container-fluid product-detailes">
@@ -150,44 +153,109 @@
         </div>
         <!-- ************************ -->
         <div class="result-box">
-          <div class="empty-result" v-if="search_toggeler==true">
+          <div class="empty-result" v-if="search_result == false">
             <img
-            src="../static/health-folder-icon-2.jpg"
-            class="m-auto d-block"
-          />
-          <p class="text-center">Select Warehouse and Product</p>
+              src="../static/health-folder-icon.jpg"
+              class="m-auto d-block"
+            />
+            <p class="text-center">Select Warehouse and Product</p>
           </div>
-          <div class="results "  v-if="search_toggeler==false">
-            <div class="row ml-2"  v-for="item in productsData" :key="item.id">
-              <div class="col-4 item name">{{item.productName}}</div>
-              <div class="col-4 item quantity">{{item.balance}}</div>
-              <div class="col-4 item type">{{item.type}}</div>
+          <div class="results" v-if="search_result == true">
+            <div class="row ml-2" v-for="item in final_search_arr" :key="item.id">
+                <div class="col-4 item name">{{ item.name }}</div>
+                <div class="col-4 item quantity">{{ item.quantity }}</div>
+                <div class="col-4 item type">{{ typeTemp.type }}</div>
             </div>
           </div>
         </div>
         <!-- ***Need to Add Pagnation Component*** -->
         <div class="pagenation">
-          <p class="text-right">no items to display</p>
+          <input
+            type="submit"
+            value="clear"
+            class="btn d-inline reset_btn"
+            @click="search_result=false">
+          <p class="d-inline">no items to display</p>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-import JsonData from "../static/json/product_store.json"
+import JsonData from "../static/json/product_store.json";
 export default {
   data: () => {
     return {
-      type: true,
-      balance: true,
-      allProducts: true,
-      specificProduct: true,
-      product: true,
-      productsData: JsonData,
-      search_toggeler:true,
+      search_result:false,
+      json_arr: JsonData,
+      // v-model variables
+      warehouse_selected: 0,
+      type_selected: 0,
+      product_selected: 0,
+      picked: "",
+      show_zero_st: false,
+      // filterd arrayes
+      WH_types_arr: [],
+      TY_product_arr: [],
+      typeTemp:"",
+      final_search_arr:[],
     };
   },
+  methods: {
+    filteredType() {
+      let types_filteration = JsonData.find((el) =>
+        el.name.includes(this.warehouse_selected)
+      );
+      this.WH_types_arr = types_filteration.types;
+    },
+    filteredProducts() {
+      let products_filteration = this.WH_types_arr.find((el) =>
+        el.type.includes(this.type_selected)
+      );
+      this.typeTemp=products_filteration;
+      this.TY_product_arr = products_filteration.products;
+    },
+    product_filter(){
+      if(this.picked=="all_products"){
+        this.final_search_arr=this.TY_product_arr;
+        console.log("hello all products applied successfuly")
+      }
+      else if (this.product_selected != 0){
+        let sp_filter = this.TY_product_arr.filter((el) => el.name == this.product_selected);
+        this.final_search_arr=sp_filter;
+        console.log("hello sp_filter applied successfuly")
+      }
+    },
+    check_zero(){
+      if (this.show_zero_st == false) {
+        let zeroFilter = this.final_search_arr.filter((el) => el.quantity > 0);
+        this.final_search_arr = zeroFilter;
+        console.log("hello from zero filteration")
+        console.log(zeroFilter);
+      }
+      else{
+        this.final_search_arr;
+        console.log("hello non zero filteration")
+        console.log(this.final_search_arr);
+      }
+    },
+    reset_all(){
+      this.warehouse_selected= 0
+      this.type_selected= 0
+      this.product_selected= 0
+      this.picked= ""
+      this.show_zero_st= false
+    },
+    search_excution(){
+      this.product_filter();
+      this.check_zero();
+      this.reset_all();
+    },
+
+  },
+  watch: {
+
+  }
 };
 </script>
 
@@ -271,4 +339,13 @@ export default {
   font-size: 1.25rem;
   height: 3rem;
 }
+.pagenation p{
+  float: right;
+}
+.reset_btn{
+  font-size: 1.25rem;
+  padding: 0px;
+  margin-left: 1rem;
+}
 </style>
+

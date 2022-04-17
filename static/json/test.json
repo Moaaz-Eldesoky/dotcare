@@ -1,0 +1,42 @@
+// types_arr
+[
+  {
+    "type": "Type A",
+    "products": [
+      {
+        "name": "Jacket",
+        "quantity": 0
+      },
+      {
+        "name": "T-Shirts",
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "type": "Type B",
+    "products": [
+      {
+        "name": "shoes",
+        "quantity": 5
+      },
+      {
+        "name": "blouse",
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "type": "Type C",
+    "products": [
+      {
+        "name": "skirt",
+        "quantity": 10
+      },
+      {
+        "name": "dress",
+        "quantity": 5
+      }
+    ]
+  }
+]
