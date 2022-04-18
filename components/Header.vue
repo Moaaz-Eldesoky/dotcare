@@ -9,12 +9,12 @@
             <b-dropdown
               variant="outline-none"
               id="dropdown-1"
-              text="English"
+              :text="buttonTitle"
               class="mr-3"
             >
-              <b-dropdown-item>Arabic</b-dropdown-item>
-              <b-dropdown-item>French</b-dropdown-item>
-              <b-dropdown-item>Germany</b-dropdown-item>
+              <b-dropdown-item @click="buttonTitle = 'Arabic'">Arabic</b-dropdown-item>
+              <b-dropdown-item @click="buttonTitle = 'French'">French</b-dropdown-item>
+              <b-dropdown-item @click="buttonTitle = 'Germany'">Germany</b-dropdown-item>
             </b-dropdown>
           </div>
           <div class="vl mr-3"></div>
@@ -107,6 +107,7 @@ export default {
   data() {
     return {
       visible: false,
+      buttonTitle:"English"
     };
   },
 };
@@ -132,7 +133,7 @@ body {
   height: 30px;
 }
 .logo img {
-  height: 2.5rem;
+  height: 3rem;
   margin-top: 1rem;
   margin-left: 1rem;
 }

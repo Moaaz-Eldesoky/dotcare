@@ -12,6 +12,18 @@
           {
             "name": "T-Shirts",
             "quantity": 2
+          },
+          {
+            "name": "sweater",
+            "quantity": 12
+          },
+          {
+            "name": "coat",
+            "quantity": 23
+          },
+          {
+            "name": "jeans",
+            "quantity": 56
           }
         ]
       },
