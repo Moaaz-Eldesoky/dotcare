@@ -14,15 +14,19 @@
             "quantity": 2
           },
           {
-            "name": "sweater",
+            "name": "Sweater",
             "quantity": 12
           },
           {
-            "name": "coat",
+            "name": "Coat",
             "quantity": 23
           },
           {
-            "name": "jeans",
+            "name": "Jeans",
+            "quantity": 56
+          },
+          {
+            "name": "Tie",
             "quantity": 56
           }
         ]
