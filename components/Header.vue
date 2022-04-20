@@ -1,9 +1,14 @@
 <template>
   <header class="header">
     <!-- white navbar -->
-    <div class="container-fluid p-1 m-0 acount-and-lang bg-white mb-2">
+    <div class="container-fluid acount-and-lang bg-white p-1 m-0  mb-2">
       <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-around">
         <div class="logo"><nuxt-link to="/"><img src="../static/Logo.png" /></nuxt-link></div>
+        <div v-if="$nuxt.$route.name == 'index'" class="patinet-search">
+          <Search class="ml-4"/>
+        </div>
+        </div>
         <div class="d-flex justify-content-around">
           <div class="lang-droupdown-button">
             <b-dropdown
@@ -102,14 +107,16 @@
   </header>
 </template>
 <script>
+import Search from "./Search.vue";
 export default {
-  name: "Header",
-  data() {
-    return {
-      visible: false,
-      buttonTitle:"English"
-    };
-  },
+    name: "Header",
+    data() {
+        return {
+            visible: false,
+            buttonTitle: "English"
+        };
+    },
+    components: { Search }
 };
 </script>
 
