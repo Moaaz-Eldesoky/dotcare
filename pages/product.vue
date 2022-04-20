@@ -90,7 +90,7 @@
           </div>
           <div class="col-6" v-show="picked == 'specific_product'">
             <label class="d-block">Product <span>*</span></label>
-            <select v-model="product_selected" class="form-select" >
+            <select v-model="product_selected" class="form-select">
               <option :value="0" selected>Select Product</option>
               <option
                 v-for="item in TY_product_arr"
@@ -111,7 +111,12 @@
               picked == '' ||
               (picked == 'specific_product' && product_selected == 0)
             "
-            @click="(search_result = true), search_excution(),calc_pagination(),goto('r-box')"
+            @click="
+              (search_result = true),
+                search_excution(),
+                calc_pagination(),
+                goto('r-box')
+            "
           />
         </div>
       </div>
@@ -156,19 +161,17 @@
         </div>
         <!-- ************************ -->
         <div class="result-box">
-          <div class="empty-result" v-if="search_result == false">
+          <transition name="fade">
+            <div class="empty-result" v-if="search_result == false">
             <img
               src="../static/health-folder-icon.jpg"
               class="m-auto d-block"
             />
             <p class="text-center">Select Warehouse and Product</p>
           </div>
+          </transition>
           <div class="results" v-if="search_result == true">
-            <div
-              class="row ml-2"
-              v-for="item in pagination_arr"
-              :key="item.id"
-            >
+            <div class="row ml-2" v-for="item in pagination_arr" :key="item.id">
               <div class="col-4 item name">{{ item.name }}</div>
               <div class="col-4 item quantity">{{ item.quantity }}</div>
               <div class="col-4 item type">{{ typeTemp.type }}</div>
@@ -176,19 +179,23 @@
           </div>
         </div>
         <div class="result_footer d-flex justify-content-between">
-          <div class=" pagination_cont">
-            <v-pagination v-model="currentPage" :page-count="pagesNum" @change="calc_pagination()"></v-pagination>
+          <div class="pagination_cont">
+            <v-pagination
+              v-model="currentPage"
+              :page-count="pagesNum"
+              @change="calc_pagination()"
+            ></v-pagination>
           </div>
-          <div v-if="search_result==true" class=" text-right mr-2">
+          <div v-if="search_result == true" class="text-right mr-2">
             <input
-            type="submit"
-            value="Clear"
-            class="btn d-inline reset_btn"
-            @click="search_result = false,pagesNum=0"
-          />
+              type="submit"
+              value="Clear"
+              class="btn d-inline reset_btn"
+              @click="(search_result = false), (pagesNum = 0)"
+            />
           </div>
-          <div v-if="search_result==false" class=" text-right">
-          <p class="no-items">no items to display</p>
+          <div v-if="search_result == false" class="text-right">
+            <p class="no-items">no items to display</p>
           </div>
         </div>
       </div>
@@ -197,13 +204,13 @@
 </template>
 
 <script>
-import vPagination from 'vue-plain-pagination'
+import vPagination from "vue-plain-pagination";
 import JsonData from "../static/json/product_store.json";
 export default {
   components: { vPagination },
   data: () => {
     return {
-      array:["moaaz","salah","ramadan"],
+      array: ["moaaz", "salah", "ramadan"],
       json_arr: JsonData,
       search_result: false,
       // v-model variables
@@ -214,14 +221,13 @@ export default {
       show_zero_st: false,
       // pagination
       currentPage: 1,
-      pagesNum:0,
+      pagesNum: 0,
       // filterd arrayes
       WH_types_arr: [],
       TY_product_arr: [],
       typeTemp: "",
       final_search_arr: [],
-      pagination_arr:[],
-
+      pagination_arr: [],
     };
   },
   methods: {
@@ -241,9 +247,10 @@ export default {
     product_filter() {
       if (this.picked == "all_products") {
         this.final_search_arr = this.TY_product_arr;
-        console.log("hello all products applied successfuly" +this.final_search_arr);
-      }
-      else if (this.product_selected != 0) {
+        console.log(
+          "hello all products applied successfuly" + this.final_search_arr
+        );
+      } else if (this.product_selected != 0) {
         let sp_filter = this.TY_product_arr.filter(
           (el) => el.name == this.product_selected
         );
@@ -251,9 +258,6 @@ export default {
         console.log("hello sp_filter applied successfuly");
       }
     },
-    // updateSelected(newSelected) {
-    //   this.selected = newSelected;
-    // },
     check_zero() {
       if (this.show_zero_st == false) {
         let zeroFilter = this.final_search_arr.filter((el) => el.quantity > 0);
@@ -262,15 +266,21 @@ export default {
         console.log(zeroFilter);
       } else {
         this.final_search_arr;
-        console.log("hello non zero filteration final search array is"+this.final_search_arr);
+        console.log(
+          "hello non zero filteration final search array is" +
+            this.final_search_arr
+        );
       }
     },
-    calc_pagination(){
-      this.pagination_arr = this.final_search_arr.slice(this.currentPage * 2 - 2,(this.currentPage * 2 - 2) + 2)         //it returns array of objs >> end object not included
-      console.log("pagination array is:"+ this.pagination_arr);
+    calc_pagination() {
+      this.pagination_arr = this.final_search_arr.slice(
+        this.currentPage * 2 - 2,
+        this.currentPage * 2 - 2 + 2
+      );
+      console.log("pagination array is:" + this.pagination_arr);
     },
-    calc_pages_nums(){
-      this.pagesNum = Math.ceil(Object.keys(this.final_search_arr).length/2);
+    calc_pages_nums() {
+      this.pagesNum = Math.ceil(Object.keys(this.final_search_arr).length / 2);
       console.log("pages num is : " + this.pagesNum);
     },
     reset_all() {
@@ -290,7 +300,10 @@ export default {
     goto(refName) {
       var element = this.$refs[refName];
       var top = element.offsetTop;
-      window.scrollTo(0, top);
+      window.scrollTo({
+        top: 300,
+        behavior: "smooth",
+      });
     },
   },
   watch: {},
@@ -385,29 +398,35 @@ export default {
   padding: 2.5px 10px;
   background-color: white;
 }
-.no-items{
+.no-items {
   font-size: 1.5rem;
-
 }
 /* pagination style */
-.pagination_cont{
+.pagination_cont {
   margin-left: 1rem;
-  width:2rem ;
+  width: 2rem;
 }
-.pagination ul{
+.pagination ul {
   border: 1px solid red;
   margin-top: 0px;
 }
-.pagination li button{
-  border: 1px solid #DDD;
+.pagination li button {
+  border: 1px solid #ddd;
   background-color: white;
   font-size: 1.5rem;
   font-weight: 600;
-  color:black;
+  color: black;
   padding: 0rem 1rem;
 }
-.pagination-link--active{
+.pagination-link--active {
   background-color: #48dbdf !important;
+}
+/* animation */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
 }
 </style>
 
