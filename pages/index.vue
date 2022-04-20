@@ -26,7 +26,7 @@ export default {
 
 <style>
 body{
-  background-color: #fff;
+  background-color: #eff7ff;
 }
 .home-page{
     height: 40rem;

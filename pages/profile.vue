@@ -1,10 +1,15 @@
 <template>
-    <h1>hello from profile page😊</h1>
+  <div class="container cv">
+    <img src="../static/profile/Moaaz_EldesokyCV-1.jpg" />
+    <img src="../static/profile/Moaaz_EldesokyCV-2.jpg" />
+  </div>
 </template>
 <style scoped>
-h1{
-    margin: 10rem  ;
-    margin-bottom: 32rem;
-    
+.cv {
+margin-top: 5rem;
+}
+.cv img {
+  width: 100%;
+  margin-bottom: 3rem;
 }
 </style>

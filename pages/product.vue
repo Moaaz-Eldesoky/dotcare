@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid full-page">
+  <section class="container-fluid full-page">
     <h3 class="main-header font-weight-bold mt-3 mb-3">Product</h3>
     <div class="border p-4">
       <div class="basic-informaion">
@@ -90,7 +90,7 @@
           </div>
           <div class="col-6" v-show="picked == 'specific_product'">
             <label class="d-block">Product <span>*</span></label>
-            <select v-model="product_selected" class="form-select">
+            <select v-model="product_selected" class="form-select" >
               <option :value="0" selected>Select Product</option>
               <option
                 v-for="item in TY_product_arr"
@@ -100,11 +100,6 @@
                 {{ item.name }}
               </option>
             </select>
-            <!-- <Multiselect
-              :selected="selected"
-              :options="options"
-              @update="updateSelected"
-            ></Multiselect> -->
           </div>
         </div>
         <div class="d-flex search-button">
@@ -184,51 +179,49 @@
           <div class=" pagination_cont">
             <v-pagination v-model="currentPage" :page-count="pagesNum" @change="calc_pagination()"></v-pagination>
           </div>
-          <div v-if="search_result==true" class=" text-right">
+          <div v-if="search_result==true" class=" text-right mr-2">
             <input
             type="submit"
-            value="clear"
+            value="Clear"
             class="btn d-inline reset_btn"
-            @click="search_result = false"
+            @click="search_result = false,pagesNum=0"
           />
           </div>
           <div v-if="search_result==false" class=" text-right">
-          <p class="">no items to display</p>
+          <p class="no-items">no items to display</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
-// import Multiselect from "vue-multiselect";
 import vPagination from 'vue-plain-pagination'
 import JsonData from "../static/json/product_store.json";
 export default {
-  // components: { Multiselect },
   components: { vPagination },
   data: () => {
     return {
-      search_result: false,
+      array:["moaaz","salah","ramadan"],
       json_arr: JsonData,
+      search_result: false,
       // v-model variables
       warehouse_selected: 0,
       type_selected: 0,
       product_selected: 0,
       picked: "",
       show_zero_st: false,
+      // pagination
       currentPage: 1,
-      // pageCount:0,
-      // selected: null,
-      // options: ["static", "json", "options", "items"],
+      pagesNum:0,
       // filterd arrayes
       WH_types_arr: [],
       TY_product_arr: [],
       typeTemp: "",
       final_search_arr: [],
       pagination_arr:[],
-      pagesNum:0
+
     };
   },
   methods: {
@@ -305,24 +298,11 @@ export default {
 </script>
 
 <style>
-.pagination ul{
-  border: 1px solid red;
-  margin-top: 0px;
-}
-.pagination li button{
-  border: 1px solid #DDD;
-  background-color: white;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color:black;
-  padding: 0rem 1rem;
-}
-.pagination-link--active{
-  background-color: #48dbdf !important;
-}
+@import url(https://cdn.syncfusion.com/ej2/material.css);
 .border {
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   background-color: #fff;
+  border-radius: 5px;
 }
 .secondary-header {
   font-size: 1.3rem;
@@ -401,12 +381,33 @@ export default {
 }
 .reset_btn {
   font-size: 1.25rem;
-  padding: 0px;
+  font-weight: 600;
+  padding: 2.5px 10px;
+  background-color: white;
 }
+.no-items{
+  font-size: 1.5rem;
+
+}
+/* pagination style */
 .pagination_cont{
   margin-left: 1rem;
   width:2rem ;
 }
-
+.pagination ul{
+  border: 1px solid red;
+  margin-top: 0px;
+}
+.pagination li button{
+  border: 1px solid #DDD;
+  background-color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color:black;
+  padding: 0rem 1rem;
+}
+.pagination-link--active{
+  background-color: #48dbdf !important;
+}
 </style>
 
